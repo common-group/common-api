@@ -14,7 +14,8 @@ module V1
                    .tap { |r| r.project = parent }
 
         authorize resource, :create?
-        resource.save
+        # do not validate initial migration
+        resource.save(validate: false)
 
         return render json: resource.errors, status: 400 unless resource.valid?
         render json: { goal_id: resource.id }
