@@ -27,7 +27,7 @@ class GoalPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[title description value]
+    %i[title description value data external_id project_id]
   end
 
   def project_is_from_platform?

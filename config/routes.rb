@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :posts, only: %i[create destroy], controller: 'projects/posts'
       resources :rewards, only: %i[create update destroy], controller: 'projects/rewards'
     end
+    resources :addresses, only: %i[create update destroy]
     resources :users do
       collection do
         post :login, controller: 'users/sessions'

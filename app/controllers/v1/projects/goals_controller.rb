@@ -14,10 +14,11 @@ module V1
                    .tap { |r| r.project = parent }
 
         authorize resource, :create?
-        resource.save
+        # do not validate initial migration
+        resource.save(validate: false)
+        # return render json: resource.errors, status: 400 unless resource.valid?
 
-        return render json: resource.errors, status: 400 unless resource.valid?
-        render json: { goal_id: resource.id }
+        render json: { id: resource.id }
       end
 
       def update
@@ -28,14 +29,14 @@ module V1
         resource.save
 
         return render json: resource.errors, status: 400 unless resource.valid?
-        render json: { goal_id: resource.id }
+        render json: { id: resource.id }
       end
 
       def destroy
         resource = collection.find params[:id]
         authorize resource, :destroy?
 
-        return render status: 200, json: { goal_id: resource.id, deleted: 'OK' } if resource.destroy
+        return render status: 200, json: { id: resource.id, deleted: 'OK' } if resource.destroy
         render status: 400, json: resource.errors
       end
 
